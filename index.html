@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="UniPortal - University Management System"/>
+<meta name="theme-color" content="#4C1D95"/>
+<title>UniPortal - University Management System</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--purple:#4C1D95;--pm:#7C3AED;--pl:#EDE9FE;--teal:#0E7490;--tl:#E0F2FE;--amber:#D97706;--al:#FEF3C7;--red:#DC2626;--rl:#FEF2F2;--green:#059669;--gl:#ECFDF5;--indigo:#3730A3;--il:#EEF2FF;--s50:#F8FAFC;--s100:#F1F5F9;--s200:#E2E8F0;--s400:#94A3B8;--s500:#64748B;--s700:#334155;--txt:#1E293B;--w:#fff;--r:12px;--rs:8px;--sh:0 1px 3px rgba(0,0,0,.1);--shm:0 4px 16px rgba(0,0,0,.12)}
+body{font-family:'Segoe UI',Arial,sans-serif;color:var(--txt);background:var(--s50);min-height:100vh}
+button{font-family:inherit;cursor:pointer}input,select,textarea{font-family:inherit}
+.h{display:none!important}
+#as{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1E0645 0%,var(--purple) 50%,var(--pm) 100%);padding:20px}
+.ac{background:#fff;border-radius:20px;padding:40px 36px;width:100%;max-width:400px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.al2{text-align:center;margin-bottom:24px}.ali{font-size:3rem;display:block;margin-bottom:6px}
+.aln{font-size:1.5rem;font-weight:800;color:var(--purple)}.als{font-size:.83rem;color:var(--s500)}
+.at{font-size:1.1rem;font-weight:700;margin-bottom:4px}.ad{font-size:.85rem;color:var(--s500);margin-bottom:20px}
+.ah{background:var(--pl);border-radius:var(--rs);padding:10px 13px;font-size:.82rem;color:var(--purple);margin-bottom:18px;border-left:3px solid var(--purple)}
+.af{margin-bottom:14px}.af label{display:block;font-size:.82rem;font-weight:600;color:var(--s700);margin-bottom:5px}
+.af input,.af select{width:100%;padding:10px 13px;border:1.5px solid var(--s200);border-radius:var(--rs);font-size:.93rem;color:var(--txt);transition:.15s}
+.af input:focus,.af select:focus{outline:none;border-color:var(--purple);box-shadow:0 0 0 3px rgba(76,29,149,.13)}
+.afw{position:relative}.afe{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--s400);cursor:pointer;font-size:.9rem}
+.ab{width:100%;padding:12px;background:var(--purple);color:#fff;border:none;border-radius:var(--rs);font-size:1rem;font-weight:700;cursor:pointer;transition:.18s;margin-top:4px}
+.ab:hover{background:#1E0645;box-shadow:var(--shm)}.ab:disabled{opacity:.6}
+.alk{background:none;border:none;color:var(--purple);font-size:.85rem;font-weight:600;cursor:pointer;text-decoration:underline;padding:0}
+.ae{background:var(--rl);color:var(--red);border-radius:var(--rs);padding:9px 12px;font-size:.83rem;font-weight:600;margin-bottom:14px}
+.ao{background:var(--pl);color:var(--purple);border-radius:var(--rs);padding:9px 12px;font-size:.83rem;font-weight:600;margin-bottom:14px}
+.pb{height:4px;border-radius:2px;margin-top:5px;transition:.3s;background:var(--s200)}.pl{font-size:.74rem;color:var(--s400);margin-top:3px}
+.app{display:flex;flex-direction:column;min-height:100vh}
+.tb{background:var(--purple);color:#fff;height:56px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.tbb{font-size:1.1rem;font-weight:800;display:flex;align-items:center;gap:8px}.tbi{font-size:1.4rem}
+.tbu{display:flex;align-items:center;gap:8px;cursor:pointer;background:rgba(255,255,255,.12);border-radius:20px;padding:5px 12px 5px 6px;transition:.15s}
+.tbu:hover{background:rgba(255,255,255,.2)}.tbav{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700}
+.tbun{font-size:.82rem;color:rgba(255,255,255,.9)}.tbso{font-size:.72rem;color:rgba(255,255,255,.5);margin-left:2px}
+.nb{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--w);border-top:1px solid var(--s200);z-index:90;height:60px;padding-bottom:env(safe-area-inset-bottom)}
+.nbi{display:flex;height:100%}
+.nbb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:none;color:var(--s400);font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;transition:.15s;padding:6px 0}
+.nbb.active{color:var(--purple)}.nbic{font-size:1.3rem}
+.lay{display:flex;flex:1}
+.sid{width:220px;background:var(--w);border-right:1px solid var(--s200);padding:16px 10px;flex-shrink:0;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto}
+.ss{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--s400);padding:10px 10px 5px;margin-top:10px}
+.sb{display:flex;align-items:center;gap:9px;width:100%;padding:9px 12px;border-radius:var(--rs);border:none;background:transparent;text-align:left;font-size:.87rem;font-weight:500;color:var(--s700);cursor:pointer;transition:.15s}
+.sb:hover{background:var(--s100)}.sb.active{background:var(--pl);color:var(--purple);font-weight:700}.sbi{font-size:1.1rem;flex-shrink:0}
+.con{flex:1;padding:20px;overflow-y:auto;min-width:0}
+.pt{font-size:1.3rem;font-weight:800;color:var(--txt);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card{background:var(--w);border-radius:var(--r);box-shadow:var(--sh);padding:20px;margin-bottom:14px}
+.ct{font-size:.95rem;font-weight:700;color:var(--txt);margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px}
+.stat{background:var(--w);border-radius:var(--r);box-shadow:var(--sh);padding:16px;display:flex;flex-direction:column;gap:4px;border-left:4px solid var(--purple)}
+.stat.t{border-left-color:var(--teal)}.stat.a{border-left-color:var(--amber)}.stat.g{border-left-color:var(--green)}.stat.i{border-left-color:var(--indigo)}
+.sn{font-size:1.8rem;font-weight:800;color:var(--txt);line-height:1}.sl{font-size:.73rem;color:var(--s500);text-transform:uppercase;letter-spacing:.05em}.sic{font-size:1.3rem;margin-bottom:2px}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;border-radius:var(--rs);font-weight:600;font-size:.87rem;border:none;cursor:pointer;transition:.18s;white-space:nowrap}
+.bp{background:var(--purple);color:#fff}.bp:hover{background:#1E0645;transform:translateY(-1px)}
+.bg{background:var(--s100);color:var(--s700)}.bg:hover{background:var(--s200)}
+.bd{background:var(--rl);color:var(--red)}.bs{background:var(--gl);color:var(--green)}.bi{background:var(--tl);color:var(--teal)}
+.bsm{padding:5px 10px;font-size:.78rem}
+.hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.sf{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.sf input,.sf select{padding:8px 11px;border:1.5px solid var(--s200);border-radius:var(--rs);font-size:.87rem}
+.sf input:focus,.sf select:focus{outline:none;border-color:var(--purple)}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.87rem}
+th{padding:10px 12px;text-align:left;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--s500);border-bottom:2px solid var(--s200);background:var(--s50)}
+td{padding:10px 12px;border-bottom:1px solid var(--s100);vertical-align:middle}
+tr:last-child td{border:none}tr:hover td{background:var(--s50)}
+.av{width:32px;height:32px;border-radius:50%;background:var(--pl);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:var(--purple);flex-shrink:0}
+.badge{display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;font-size:.73rem;font-weight:600}
+.bg-g{background:var(--gl);color:var(--green)}.bg-r{background:var(--rl);color:var(--red)}
+.bg-a{background:var(--al);color:var(--amber)}.bg-p{background:var(--pl);color:var(--purple)}
+.bg-t{background:var(--tl);color:var(--teal)}.bg-i{background:var(--il);color:var(--indigo)}
+.bg-s{background:var(--s100);color:var(--s500)}
+.em{text-align:center;padding:40px 20px;color:var(--s400)}.emi{font-size:2.5rem;margin-bottom:8px}
+.fg{margin-bottom:13px}.fg label{display:block;font-size:.82rem;font-weight:600;color:var(--s700);margin-bottom:4px}
+.fg input,.fg select,.fg textarea{width:100%;padding:9px 12px;border:1.5px solid var(--s200);border-radius:var(--rs);font-size:.9rem}
+.fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--purple)}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fa{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+.im{border-radius:var(--rs);padding:9px 12px;font-size:.83rem;font-weight:600;margin-bottom:12px}
+.im.ok{background:var(--gl);color:var(--green)}.im.er{background:var(--rl);color:var(--red)}.im.inf{background:var(--pl);color:var(--purple)}
+.pnl{background:var(--pl);border:1.5px solid rgba(76,29,149,.2);border-radius:var(--r);padding:18px;margin-bottom:14px}
+.pt2{font-weight:700;font-size:.95rem;color:var(--purple);margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+.toast{position:fixed;bottom:80px;right:20px;background:var(--txt);color:#fff;border-radius:var(--rs);padding:12px 18px;font-size:.85rem;font-weight:500;box-shadow:var(--shm);z-index:500;max-width:300px;transition:opacity .25s,transform .25s}
+.toast.success{background:var(--green)}.toast.error{background:var(--red)}.toast.h{opacity:0;transform:translateY(10px);pointer-events:none}
+.gpb{display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;font-size:1rem;font-weight:800;border:3px solid}
+.ga{background:#ECFDF5;color:#059669;border-color:#059669}.gb{background:#EEF2FF;color:#3730A3;border-color:#3730A3}
+.gc{background:#FEF3C7;color:#D97706;border-color:#D97706}.gd{background:#FEF2F2;color:#DC2626;border-color:#DC2626}
+.cc{background:var(--s50);border:1.5px solid var(--s200);border-radius:10px;padding:14px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.cc.reg{border-color:rgba(124,58,237,.4);background:var(--pl)}.cco{font-weight:800;font-size:.9rem;color:var(--purple)}
+.tsc{background:linear-gradient(135deg,#1E0645 0%,var(--purple) 100%);color:#fff;border-radius:16px;padding:24px;margin-bottom:16px}
+.tsr{display:grid;grid-template-columns:90px 1fr 70px 60px 60px;gap:0;padding:8px 14px;border-bottom:1px solid rgba(255,255,255,.07);font-size:.82rem}
+.tsr:last-child{border:none}.tsr.hd{font-weight:700;opacity:.7;font-size:.72rem;text-transform:uppercase}
+.tc{text-align:center}
+@media(max-width:768px){.sid{display:none}.nb{display:block}.con{padding:12px;padding-bottom:70px}.fr{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div id="as">
+<div class="ac">
+<div class="al2"><span class="ali">🎓</span><div class="aln">UniPortal</div><div class="als">University Management System</div></div>
+<div id="alog">
+<div class="at">Registry Login</div><div class="ad">Sign in to access the portal</div>
+<div class="ah">Demo: <strong>registry</strong> / <strong>Uni@789</strong></div>
+<div id="le" class="ae h"></div>
+<div class="af"><label>Username</label><input id="lu" placeholder="Enter username" onkeydown="if(event.key==='Enter')dL()"></div>
+<div class="af"><label>Password</label><div class="afw"><input id="lp" type="password" placeholder="Password" onkeydown="if(event.key==='Enter')dL()"><button class="afe" onclick="tPw('lp',this)">👁</button></div></div>
+<div style="text-align:right;margin-bottom:14px"><button class="alk" onclick="sA('forgot')">Forgot password?</button></div>
+<button class="ab" id="lb" onclick="dL()">Sign In</button>
+</div>
+<div id="afgt" class="h">
+<div class="at">Reset Password</div><div class="ad">Enter your username to receive a reset link.</div>
+<div id="fm" class="ao h"></div><div id="fe" class="ae h"></div>
+<div class="af"><label>Username</label><input id="fu" placeholder="Your username" onkeydown="if(event.key==='Enter')dF()"></div>
+<button class="ab" id="fb" onclick="dF()">Send Reset Link</button>
+<div style="text-align:center;margin-top:14px"><button class="alk" onclick="sA('login')">← Back to Sign In</button></div>
+</div>
+<div id="ares" class="h">
+<div class="at">Set New Password</div>
+<div id="re" class="ae h"></div>
+<div class="af"><label>New Password</label><div class="afw"><input id="rp1" type="password" placeholder="Min 8 characters" oninput="pS()"><button class="afe" onclick="tPw('rp1',this)">👁</button></div>
+<div class="pb" id="pb"></div><div class="pl" id="pl"></div></div>
+<div class="af"><label>Confirm</label><input id="rp2" type="password" placeholder="Repeat password" onkeydown="if(event.key==='Enter')dR()"></div>
+<button class="ab" onclick="dR()">Update Password</button>
+<div style="text-align:center;margin-top:14px"><button class="alk" onclick="sA('login')">← Back</button></div>
+</div>
+</div>
+</div>
+
+<div class="app h" id="app">
+<header class="tb">
+<div class="tbb"><span class="tbi">🎓</span>UniPortal</div>
+<div class="tbu" onclick="dOut()"><div class="tbav" id="tav">R</div><span class="tbun">Registry</span><span class="tbso">· Sign out</span></div>
+</header>
+<div class="lay">
+<nav class="sid">
+<div class="ss">Main</div>
+<button class="sb active" onclick="sV('dash')"><span class="sbi">📊</span>Dashboard</button>
+<button class="sb" onclick="sV('students')"><span class="sbi">🎓</span>Students</button>
+<button class="sb" onclick="sV('faculties')"><span class="sbi">🏛️</span>Faculties</button>
+<button class="sb" onclick="sV('courses')"><span class="sbi">📚</span>Courses</button>
+<div class="ss">Academic</div>
+<button class="sb" onclick="sV('reg')"><span class="sbi">📋</span>Course Reg.</button>
+<button class="sb" onclick="sV('attend')"><span class="sbi">✅</span>Attendance</button>
+<button class="sb" onclick="sV('scores')"><span class="sbi">📝</span>Score Entry</button>
+<button class="sb" onclick="sV('trans')"><span class="sbi">📜</span>Transcripts</button>
+<div class="ss">Admin</div>
+<button class="sb" onclick="sV('lecs')"><span class="sbi">👨‍🏫</span>Lecturers</button>
+<button class="sb" onclick="sV('fees')"><span class="sbi">💳</span>School Fees</button>
+<button class="sb" onclick="sV('hostel')"><span class="sbi">🏠</span>Hostel</button>
+<button class="sb" onclick="sV('library')"><span class="sbi">📖</span>Library</button>
+<button class="sb" onclick="sV('set')"><span class="sbi">⚙️</span>Settings</button>
+</nav>
+<main class="con" id="con"></main>
+</div>
+<nav class="nb"><div class="nbi">
+<button class="nbb active" onclick="sV('dash')"><span class="nbic">📊</span>Home</button>
+<button class="nbb" onclick="sV('students')"><span class="nbic">🎓</span>Students</button>
+<button class="nbb" onclick="sV('reg')"><span class="nbic">📋</span>Reg.</button>
+<button class="nbb" onclick="sV('trans')"><span class="nbic">📜</span>Trans.</button>
+<button class="nbb" onclick="sV('fees')"><span class="nbic">💳</span>Fees</button>
+</div></nav>
+</div>
+<div id="toast" class="toast h"></div>
+
+<script>
+const CR={u:'registry',p:'Uni@789',e:'registry@uniportal.edu.ng'};
+function sA(s){['alog','afgt','ares'].forEach(x=>document.getElementById(x).classList.add('h'));document.getElementById(s==='login'?'alog':s==='forgot'?'afgt':'ares').classList.remove('h');['le','fm','fe','re'].forEach(id=>{const e=document.getElementById(id);if(e)e.classList.add('h');});}
+function tPw(id,btn){const i=document.getElementById(id);i.type=i.type==='password'?'text':'password';btn.textContent=i.type==='password'?'👁':'🙈';}
+function dL(){
+  const u=document.getElementById('lu').value.trim(),p=document.getElementById('lp').value;
+  const err=document.getElementById('le');err.classList.add('h');
+  if(!u||!p){err.textContent='Please enter username and password.';err.classList.remove('h');return;}
+  const b=document.getElementById('lb');b.disabled=true;b.textContent='Signing in…';
+  setTimeout(()=>{
+    if(u===CR.u&&p===CR.p){document.getElementById('as').classList.add('h');document.getElementById('app').classList.remove('h');sV('dash');toast('Welcome to UniPortal! 🎓','success');}
+    else{err.textContent='Incorrect username or password.';err.classList.remove('h');document.getElementById('lp').value='';}
+    b.disabled=false;b.textContent='Sign In';},600);}
+function dF(){const u=document.getElementById('fu').value.trim();const err=document.getElementById('fe'),ok=document.getElementById('fm');err.classList.add('h');ok.classList.add('h');if(!u){err.textContent='Please enter your username.';err.classList.remove('h');return;}const b=document.getElementById('fb');b.disabled=true;b.textContent='Sending…';setTimeout(()=>{if(u===CR.u){ok.textContent=`Reset link sent to ${CR.e}`;ok.classList.remove('h');setTimeout(()=>sA('reset'),2000);}else{err.textContent='No account found.';err.classList.remove('h');}b.disabled=false;b.textContent='Send Reset Link';},800);}
+function pS(){const pw=document.getElementById('rp1').value;const bar=document.getElementById('pb'),lbl=document.getElementById('pl');if(!pw){bar.style.cssText='';lbl.textContent='';return;}let s=0;if(pw.length>=8)s++;if(pw.length>=12)s++;if(/[A-Z]/.test(pw))s++;if(/[0-9]/.test(pw))s++;if(/[^A-Za-z0-9]/.test(pw))s++;const c=['','#DC2626','#D97706','#D97706','#059669','#047857'];const l=['','Weak','Fair','Good','Strong','Very Strong'];bar.style.cssText=`background:${c[s]||'#E2E8F0'};height:4px;border-radius:2px;width:${s*20}%;margin-top:5px;transition:.3s`;lbl.textContent=l[s]||'';lbl.style.color=c[s]||'#94A3B8';}
+function dR(){const p1=document.getElementById('rp1').value,p2=document.getElementById('rp2').value;const err=document.getElementById('re');err.classList.add('h');if(p1.length<8){err.textContent='Password must be at least 8 characters.';err.classList.remove('h');return;}if(p1!==p2){err.textContent='Passwords do not match.';err.classList.remove('h');return;}CR.p=p1;sA('login');toast('Password updated','success');}
+function dOut(){document.getElementById('app').classList.add('h');document.getElementById('as').classList.remove('h');sA('login');}
+
+const U={
+  uni:{name:'University of Excellence',abbr:'UniEx',session:'2025/2026',semester:'Second Semester'},
+  faculties:[
+    {id:'f1',name:'Faculty of Science',depts:['Computer Science','Mathematics','Physics','Chemistry','Biochemistry']},
+    {id:'f2',name:'Faculty of Arts',depts:['English','History','Philosophy','Linguistics']},
+    {id:'f3',name:'Faculty of Social Sciences',depts:['Economics','Political Science','Sociology','Mass Communication']},
+    {id:'f4',name:'Faculty of Engineering',depts:['Civil Engineering','Electrical Engineering','Mechanical Engineering']},
+  ],
+  courses:[
+    {code:'CSC301',title:'Data Structures & Algorithms',units:3,dept:'Computer Science',level:'300',sem:2,lid:'t1'},
+    {code:'CSC302',title:'Operating Systems',units:3,dept:'Computer Science',level:'300',sem:2,lid:'t2'},
+    {code:'CSC303',title:'Database Management Systems',units:3,dept:'Computer Science',level:'300',sem:2,lid:'t1'},
+    {code:'MTH201',title:'Mathematical Analysis',units:3,dept:'Mathematics',level:'200',sem:1,lid:'t3'},
+    {code:'MTH202',title:'Linear Algebra',units:2,dept:'Mathematics',level:'200',sem:2,lid:'t3'},
+    {code:'ECO201',title:'Microeconomics I',units:3,dept:'Economics',level:'200',sem:1,lid:'t4'},
+    {code:'ENG301',title:'Technical Writing',units:2,dept:'English',level:'300',sem:2,lid:'t5'},
+    {code:'GNS101',title:'Use of English',units:2,dept:'General Studies',level:'100',sem:1,lid:'t5'},
+    {code:'GNS102',title:'Communication Skills',units:2,dept:'General Studies',level:'100',sem:2,lid:'t5'},
+  ],
+  students:[
+    {id:'u1',name:'Adaeze Okonkwo',mat:'2021/CS/001',dept:'Computer Science',fac:'f1',lvl:'300',gen:'F',st:'Anambra',gdn:'Prof. Okonkwo',ph:'080-3333-0001',em:'adaeze@students.uniex.edu.ng',fees:'paid',hos:'Fern Hall',rm:'B204'},
+    {id:'u2',name:'Mohammed Ibrahim',mat:'2022/ECO/015',dept:'Economics',fac:'f3',lvl:'200',gen:'M',st:'Kano',gdn:'Alhaji Ibrahim',ph:'080-3333-0002',em:'mohammed@students.uniex.edu.ng',fees:'partial',hos:'None',rm:''},
+    {id:'u3',name:'Chisom Nwachukwu',mat:'2020/CS/008',dept:'Computer Science',fac:'f1',lvl:'400',gen:'F',st:'Imo',gdn:'Dr. Nwachukwu',ph:'080-3333-0003',em:'chisom@students.uniex.edu.ng',fees:'paid',hos:'Iris Hall',rm:'A112'},
+    {id:'u4',name:'Temitope Adeyemi',mat:'2023/MTH/022',dept:'Mathematics',fac:'f1',lvl:'100',gen:'M',st:'Oyo',gdn:'Mr. Adeyemi',ph:'080-3333-0004',em:'temitope@students.uniex.edu.ng',fees:'owing',hos:'None',rm:''},
+    {id:'u5',name:'Blessing Okoro',mat:'2021/ENG/034',dept:'English',fac:'f2',lvl:'300',gen:'F',st:'Rivers',gdn:'Mrs. Okoro',ph:'080-3333-0005',em:'blessing@students.uniex.edu.ng',fees:'paid',hos:'Fern Hall',rm:'C301'},
+    {id:'u6',name:'Emeka Eze',mat:'2022/PS/011',dept:'Political Science',fac:'f3',lvl:'200',gen:'M',st:'Enugu',gdn:'Mr. Eze',ph:'080-3333-0006',em:'emeka@students.uniex.edu.ng',fees:'paid',hos:'Cedar Hall',rm:'A203'},
+  ],
+  lecturers:[
+    {id:'t1',name:'Dr. Ngozi Obi',dept:'Computer Science',rank:'Senior Lecturer',courses:['CSC301','CSC303'],ph:'080-4444-0001',em:'n.obi@uniex.edu.ng'},
+    {id:'t2',name:'Prof. Emeka Chukwu',dept:'Computer Science',rank:'Professor',courses:['CSC302'],ph:'080-4444-0002',em:'e.chukwu@uniex.edu.ng'},
+    {id:'t3',name:'Dr. Fatima Musa',dept:'Mathematics',rank:'Lecturer I',courses:['MTH201','MTH202'],ph:'080-4444-0003',em:'f.musa@uniex.edu.ng'},
+    {id:'t4',name:'Prof. Kabir Yusuf',dept:'Economics',rank:'Professor',courses:['ECO201'],ph:'080-4444-0004',em:'k.yusuf@uniex.edu.ng'},
+    {id:'t5',name:'Dr. Ada Williams',dept:'English',rank:'Lecturer II',courses:['ENG301','GNS101','GNS102'],ph:'080-4444-0005',em:'a.williams@uniex.edu.ng'},
+  ],
+  reg:{'u1':['CSC301','CSC302','CSC303','GNS102'],'u2':['ECO201','MTH202','GNS102'],'u3':['CSC303','ENG301'],'u4':['MTH201','MTH202','GNS101'],'u5':['ENG301','GNS102'],'u6':['ECO201','GNS102']},
+  sc:{'u1':{'CSC301':{ca:28,ex:52},'CSC302':{ca:25,ex:48},'CSC303':{ca:30,ex:56},'GNS102':{ca:18,ex:36}},'u2':{'ECO201':{ca:22,ex:40},'MTH202':{ca:19,ex:35},'GNS102':{ca:15,ex:28}},'u3':{'CSC303':{ca:29,ex:57},'ENG301':{ca:18,ex:35}},'u4':{'MTH201':{ca:26,ex:50},'MTH202':{ca:23,ex:44},'GNS101':{ca:16,ex:30}},'u5':{'ENG301':{ca:28,ex:54},'GNS102':{ca:20,ex:38}},'u6':{'ECO201':{ca:24,ex:46},'GNS102':{ca:16,ex:30}}},
+  att:{},
+  fees:{'u1':{tot:250000,pd:250000,bal:0},'u2':{tot:250000,pd:120000,bal:130000},'u3':{tot:250000,pd:250000,bal:0},'u4':{tot:250000,pd:0,bal:250000},'u5':{tot:250000,pd:250000,bal:0},'u6':{tot:250000,pd:250000,bal:0}},
+  hostels:{'Fern Hall':['A101','B201','B204','C301','C302'],'Iris Hall':['A111','A112','A113'],'Cedar Hall':['A201','A202','A203']},
+  books:[
+    {id:'b1',title:'Introduction to Algorithms',auth:'Cormen et al.',avail:true,bwr:null},
+    {id:'b2',title:'Database System Concepts',auth:'Silberschatz',avail:false,bwr:'u1'},
+    {id:'b3',title:'Principles of Economics',auth:'Mankiw',avail:true,bwr:null},
+    {id:'b4',title:'Linear Algebra Done Right',auth:'Sheldon Axler',avail:false,bwr:'u4'},
+    {id:'b5',title:'Things Fall Apart',auth:'Chinua Achebe',avail:true,bwr:null},
+    {id:'b6',title:'Engineering Mathematics',auth:'K.A. Stroud',avail:true,bwr:null},
+  ],
+  admOpen:false,
+};
+
+let tT;
+function toast(msg,type='info'){clearTimeout(tT);const el=document.getElementById('toast');el.textContent=msg;el.className=`toast ${type}`;el.classList.remove('h');tT=setTimeout(()=>el.classList.add('h'),4000);}
+function sV(n){
+  document.querySelectorAll('.sb,.nbb').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.sb,.nbb').forEach(b=>{if(b.getAttribute('onclick')===`sV('${n}')`)b.classList.add('active');});
+  const c=document.getElementById('con');
+  const vmap={dash:vDash,students:vStu,faculties:vFac,courses:vCrs,reg:vReg,attend:vAtt,scores:vSco,trans:vTrans,lecs:vLec,fees:vFees,hostel:vHos,library:vLib,set:vSet};
+  c.innerHTML=(vmap[n]||vDash)();
+}
+const ini=n=>n.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+const fmt=n=>Number(n).toLocaleString('en-NG');
+const gp=(tot)=>tot>=70?5:tot>=60?4:tot>=50?3:tot>=45?2:tot>=40?1:0;
+const gpG=g=>g===5?'A':g===4?'B':g===3?'C':g===2?'D':g===1?'E':'F';
+const gpC=g=>g>=4?'bg-g':g>=3?'bg-i':g>=2?'bg-a':'bg-r';
+function cGPA(sid){const regs=U.reg[sid]||[];const sc=U.sc[sid]||{};let tg=0,tc=0;regs.forEach(code=>{const c=U.courses.find(x=>x.code===code);if(!c)return;const s=sc[code];if(!s||!s.ex)return;const tot=(s.ca||0)+(s.ex||0);const g=gp(tot);tg+=g*c.units;tc+=c.units;});return tc>0?{cgpa:(tg/tc).toFixed(2),units:tc}:{cgpa:'0.00',units:0};}
+function gpClr(g){const v=parseFloat(g);return v>=4?'ga':v>=3?'gb':v>=2?'gc':'gd';}
+
+function vDash(){
+  const tS=U.students.length,tL=U.lecturers.length;
+  const owing=U.students.filter(s=>U.fees[s.id]?.bal>0).length;
+  const tCol=Object.values(U.fees).reduce((a,f)=>a+f.pd,0);
+  const hCnt=U.students.filter(s=>s.hos!=='None').length;
+  return`<div class="pt">📊 Registry Dashboard</div>
+<div class="stats">
+  <div class="stat"><div class="sic">🎓</div><div class="sn">${tS}</div><div class="sl">Students</div></div>
+  <div class="stat t"><div class="sic">👨‍🏫</div><div class="sn">${tL}</div><div class="sl">Lecturers</div></div>
+  <div class="stat a"><div class="sic">💳</div><div class="sn">${owing}</div><div class="sl">Fees Owing</div></div>
+  <div class="stat g"><div class="sic">💰</div><div class="sn">₦${fmt(tCol)}</div><div class="sl">Fees Collected</div></div>
+  <div class="stat i"><div class="sic">🏠</div><div class="sn">${hCnt}</div><div class="sl">In Hostels</div></div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+  <div class="card"><div class="ct">🎓 Student CGPA</div>
+    ${U.students.map(s=>{const r=cGPA(s.id);return`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--s100)">
+      <div class="av">${ini(s.name)}</div>
+      <div style="flex:1"><div style="font-weight:600;font-size:.85rem">${s.name}</div><div style="font-size:.75rem;color:var(--s400)">${s.dept} · ${s.lvl}L</div></div>
+      <div class="gpb ${gpClr(r.cgpa)}">${r.cgpa}</div>
+    </div>`;}).join('')}
+  </div>
+  <div class="card"><div class="ct">📚 Courses</div>
+    ${U.courses.slice(0,7).map(c=>`<div style="padding:7px 0;border-bottom:1px solid var(--s100);display:flex;align-items:center;gap:8px">
+      <span class="badge bg-p" style="font-family:monospace">${c.code}</span>
+      <span style="flex:1;font-size:.85rem">${c.title}</span>
+      <span class="badge bg-t">${c.units}u</span>
+    </div>`).join('')}
+  </div>
+</div>`;
+}
+
+function vStu(){
+  const q=(document.getElementById('sq')?.value||'').toLowerCase();
+  const df=document.getElementById('df')?.value||'';
+  const depts=[...new Set(U.students.map(s=>s.dept))];
+  let rows=U.students.filter(s=>(!q||`${s.name} ${s.mat} ${s.dept}`.toLowerCase().includes(q))&&(!df||s.dept===df));
+  return`<div class="hdr"><div class="pt" style="margin:0">🎓 Students</div>
+  <button class="btn bp" onclick="togAdmit()">+ Admit Student</button></div>
+  <div id="adm-pnl" class="${U.admOpen?'pnl':'h'}">
+    <div class="pt2"><span>Admit New Student</span><button class="btn bg bsm" onclick="togAdmit()">✕</button></div>
+    <div id="am" class="im h"></div>
+    <div class="fr">
+      <div class="fg"><label>Full Name *</label><input id="an" placeholder="Full name"></div>
+      <div class="fg"><label>Matric No. *</label><input id="amn" placeholder="e.g. 2024/CS/050"></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label>Faculty *</label><select id="afac" onchange="updDepts()">${U.faculties.map(f=>`<option value="${f.id}">${f.name}</option>`).join('')}</select></div>
+      <div class="fg"><label>Department *</label><select id="adept"></select></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label>Level</label><select id="alv"><option>100</option><option>200</option><option>300</option><option>400</option><option>500</option></select></div>
+      <div class="fg"><label>Gender</label><select id="ag"><option value="M">Male</option><option value="F">Female</option></select></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label>Email</label><input id="aem" type="email" placeholder="student@uniex.edu.ng"></div>
+      <div class="fg"><label>State of Origin</label><input id="ast" placeholder="e.g. Lagos"></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label>Guardian *</label><input id="agd" placeholder="Guardian name"></div>
+      <div class="fg"><label>Phone</label><input id="aph" placeholder="080-XXXX-XXXX"></div>
+    </div>
+    <div class="fa"><button class="btn bg" onclick="togAdmit()">Cancel</button>
+    <button class="btn bp" onclick="admStu()">✓ Admit</button></div>
+  </div>
+  <div class="card">
+    <div class="sf">
+      <input id="sq" placeholder="Search students…" oninput="sV('students')" style="flex:1;min-width:160px">
+      <select id="df" onchange="sV('students')"><option value="">All departments</option>${depts.map(d=>`<option>${d}</option>`).join('')}</select>
+    </div>
+    <div class="tw"><table>
+      <thead><tr><th></th><th>Name</th><th>Matric No.</th><th>Dept./Level</th><th>CGPA</th><th>Fees</th><th>Action</th></tr></thead>
+      <tbody>${rows.map(s=>{const r=cGPA(s.id);return`<tr>
+        <td><div class="av">${ini(s.name)}</div></td>
+        <td><div style="font-weight:600">${s.name}</div><div style="font-size:.75rem;color:var(--s400)">${s.em}</div></td>
+        <td style="font-family:monospace;font-size:.82rem">${s.mat}</td>
+        <td><div style="font-size:.85rem">${s.dept}</div><span class="badge bg-p">${s.lvl}L</span></td>
+        <td><div class="gpb ${gpClr(r.cgpa)}" style="width:44px;height:44px;font-size:.9rem">${r.cgpa}</div></td>
+        <td><span class="badge ${s.fees==='paid'?'bg-g':s.fees==='partial'?'bg-a':'bg-r'}">${s.fees}</span></td>
+        <td><button class="btn bg bsm" onclick="vTR('${s.id}')">📜 Transcript</button></td>
+      </tr>`;}).join('')}</tbody>
+    </table></div>
+    <div style="padding:8px 0 0;font-size:.82rem;color:var(--s400)">${rows.length} student${rows.length!==1?'s':''}</div>
+  </div>`;
+}
+function togAdmit(){U.admOpen=!U.admOpen;sV('students');setTimeout(updDepts,50);}
+function updDepts(){const fid=document.getElementById('afac')?.value;const f=U.faculties.find(x=>x.id===fid);const d=document.getElementById('adept');if(d&&f)d.innerHTML=f.depts.map(x=>`<option>${x}</option>`).join('');}
+function admStu(){
+  const name=document.getElementById('an')?.value.trim(),mat=document.getElementById('amn')?.value.trim(),gdn=document.getElementById('agd')?.value.trim();
+  const msg=document.getElementById('am');msg.classList.add('h');
+  if(!name||!mat||!gdn){msg.className='im er';msg.textContent='Name, matric number, and guardian required.';msg.classList.remove('h');return;}
+  if(U.students.find(s=>s.mat===mat)){msg.className='im er';msg.textContent='Matric number already exists.';msg.classList.remove('h');return;}
+  const id='u'+Date.now();const fid=document.getElementById('afac')?.value||'f1';
+  U.students.push({id,name,mat,dept:document.getElementById('adept')?.value||'Computer Science',fac:fid,lvl:document.getElementById('alv')?.value||'100',gen:document.getElementById('ag')?.value||'M',st:document.getElementById('ast')?.value||'',gdn,ph:document.getElementById('aph')?.value||'',em:document.getElementById('aem')?.value||'',fees:'owing',hos:'None',rm:''});
+  U.fees[id]={tot:250000,pd:0,bal:250000};U.reg[id]=[];U.sc[id]={};
+  U.admOpen=false;toast(`${name} admitted — Matric: ${mat}`,'success');sV('students');
+}
+
+function vFac(){return`<div class="pt">🏛️ Faculties</div>${U.faculties.map(f=>`<div class="card"><div class="ct">${f.name} <span class="badge bg-p" style="margin-left:auto">${U.students.filter(s=>s.fac===f.id).length} students</span></div><div style="display:flex;flex-wrap:wrap;gap:8px">${f.depts.map(d=>{const c=U.students.filter(s=>s.dept===d).length;return`<div style="background:var(--pl);border-radius:10px;padding:10px 14px;min-width:150px"><div style="font-weight:600;font-size:.87rem;color:var(--purple)">${d}</div><div style="font-size:.78rem;color:var(--s400);margin-top:2px">${c} student${c!==1?'s':''}</div></div>`;}).join('')}</div></div>`).join('')}`;}
+
+function vCrs(){return`<div class="pt">📚 Course Catalogue</div><div class="card"><div class="tw"><table><thead><tr><th>Code</th><th>Title</th><th>Units</th><th>Department</th><th>Level</th><th>Lecturer</th></tr></thead><tbody>${U.courses.map(c=>{const l=U.lecturers.find(x=>x.id===c.lid);return`<tr><td><span class="badge bg-p" style="font-family:monospace">${c.code}</span></td><td style="font-weight:600">${c.title}</td><td><span class="badge bg-t">${c.units}</span></td><td>${c.dept}</td><td><span class="badge bg-i">${c.level}L</span></td><td style="font-size:.83rem">${l?l.name:'TBA'}</td></tr>`;}).join('')}</tbody></table></div></div>`;}
+
+function vReg(){
+  const sel=document.getElementById('rs')?.value||'u1';
+  const stu=U.students.find(x=>x.id===sel)||U.students[0];
+  const regs=U.reg[sel]||[];
+  const avail=U.courses.filter(c=>(c.level===stu.lvl||c.code.startsWith('GNS'))&&!regs.includes(c.code));
+  const tuCr=regs.reduce((a,code)=>{const c=U.courses.find(x=>x.code===code);return a+(c?.units||0);},0);
+  return`<div class="pt">📋 Course Registration</div><div class="card">
+    <div class="sf"><select id="rs" onchange="sV('reg')" style="min-width:220px">${U.students.map(s=>`<option value="${s.id}" ${s.id===sel?'selected':''}>${s.name} (${s.mat})</option>`).join('')}</select></div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px">
+      <div style="background:var(--pl);border-radius:10px;padding:12px 18px"><div style="font-size:.72rem;color:var(--s400);text-transform:uppercase;margin-bottom:2px">Student</div><div style="font-weight:700">${stu.name}</div><div style="font-size:.82rem;color:var(--s500)">${stu.dept} · ${stu.lvl}L</div></div>
+      <div style="background:var(--tl);border-radius:10px;padding:12px 18px"><div style="font-size:.72rem;color:var(--s400);text-transform:uppercase;margin-bottom:2px">Registered</div><div style="font-weight:700;font-size:1.4rem">${regs.length}</div><div style="font-size:.82rem;color:var(--s500)">${tuCr} credit units</div></div>
+    </div>
+    <div class="ct">✅ Registered Courses</div>
+    ${regs.length?regs.map(code=>{const c=U.courses.find(x=>x.code===code);if(!c)return'';return`<div class="cc reg"><div><div class="cco">${c.code}</div><div style="font-size:.85rem;font-weight:600">${c.title}</div><div style="font-size:.78rem;color:var(--s500)">${c.dept}</div></div><div style="display:flex;align-items:center;gap:8px"><span class="badge bg-t">${c.units} cr.</span><button class="btn bd bsm" onclick="dropC('${sel}','${code}')">Drop</button></div></div>`;}).join(''):`<div class="em"><div class="emi">📋</div><div>No courses registered yet</div></div>`}
+    ${avail.length?`<div class="ct" style="margin-top:16px">➕ Add Courses</div>${avail.map(c=>`<div class="cc"><div><div class="cco">${c.code}</div><div style="font-size:.85rem;font-weight:600">${c.title}</div></div><div style="display:flex;align-items:center;gap:8px"><span class="badge bg-t">${c.units} cr.</span><button class="btn bp bsm" onclick="addC('${sel}','${c.code}')">+ Register</button></div></div>`).join('')}`:''}
+  </div>`;
+}
+function addC(sid,code){if(!U.reg[sid])U.reg[sid]=[];if(!U.reg[sid].includes(code))U.reg[sid].push(code);toast(`${code} registered`,'success');sV('reg');}
+function dropC(sid,code){U.reg[sid]=U.reg[sid].filter(c=>c!==code);toast(`${code} dropped`,'info');sV('reg');}
+
+function vAtt(){
+  const code=document.getElementById('ac')?.value||'CSC301';
+  const date=document.getElementById('ad')?.value||new Date().toISOString().slice(0,10);
+  const key=`${code}|${date}`;
+  const enrolled=U.students.filter(s=>(U.reg[s.id]||[]).includes(code));
+  return`<div class="pt">✅ Lecture Attendance</div><div class="card">
+    <div class="sf">
+      <select id="ac" onchange="sV('attend')" style="min-width:180px">${U.courses.map(c=>`<option value="${c.code}" ${c.code===code?'selected':''}>${c.code} — ${c.title}</option>`).join('')}</select>
+      <input id="ad" type="date" value="${date}" onchange="sV('attend')">
+    </div>
+    ${enrolled.length?`<div class="tw"><table>
+      <thead><tr><th></th><th>Student</th><th>Matric</th><th>Present</th><th>Absent</th><th>Late</th><th>Status</th></tr></thead>
+      <tbody>${enrolled.map(s=>{const cur=U.att[`${key}|${s.id}`]||'none';return`<tr><td><div class="av">${ini(s.name)}</div></td><td style="font-weight:600">${s.name}</td><td style="font-family:monospace;font-size:.8rem">${s.mat}</td>
+        ${['P','A','L'].map(st=>`<td><input type="radio" name="att-${s.id}" value="${st}" ${cur===st?'checked':''} onchange="mA('${key}','${s.id}','${st}')"></td>`).join('')}
+        <td><span class="badge ${cur==='P'?'bg-g':cur==='A'?'bg-r':cur==='L'?'bg-a':'bg-s'}">${cur==='none'?'—':cur}</span></td>
+      </tr>`;}).join('')}</tbody></table></div>
+      <div class="fa" style="margin-top:10px">
+        <button class="btn bs" onclick="mAP('${key}','${code}')">✅ All Present</button>
+        <button class="btn bp" onclick="toast('Attendance saved for ${code}','success')">💾 Save</button>
+      </div>`:`<div class="em"><div class="emi">📭</div><div>No students registered for ${code}</div></div>`}
+  </div>`;
+}
+function mA(key,sid,s){U.att[`${key}|${sid}`]=s;}
+function mAP(key,code){U.students.filter(s=>(U.reg[s.id]||[]).includes(code)).forEach(s=>{U.att[`${key}|${s.id}`]='P';});sV('attend');toast('All marked Present','success');}
+
+function vSco(){
+  const sel=document.getElementById('ss2')?.value||'u1';
+  const stu=U.students.find(x=>x.id===sel)||U.students[0];
+  const regs=U.reg[sel]||[];const sc=U.sc[sel]||{};
+  return`<div class="pt">📝 Score Entry (CA: /30 · Exam: /70)</div><div class="card">
+    <div class="sf"><select id="ss2" onchange="sV('scores')" style="min-width:220px">${U.students.map(s=>`<option value="${s.id}" ${s.id===sel?'selected':''}>${s.name} (${s.mat})</option>`).join('')}</select></div>
+    ${regs.length?`<div class="tw"><table>
+      <thead><tr><th>Course</th><th>CA /30</th><th>Exam /70</th><th>Total</th><th>GP</th><th>Grade</th></tr></thead>
+      <tbody>${regs.map(code=>{const c=U.courses.find(x=>x.code===code);if(!c)return'';const s=sc[code]||{};const tot=(s.ca||0)+(s.ex||0);const g=tot?gp(tot):null;return`<tr>
+        <td><div class="cco">${code}</div><div style="font-size:.78rem;color:var(--s500)">${c.title}</div></td>
+        <td><input type="number" min="0" max="30" value="${s.ca||''}" placeholder="—" style="width:64px;padding:4px 7px;border:1.5px solid var(--s200);border-radius:5px;text-align:center;font-size:.85rem" onchange="svSc('${sel}','${code}','ca',this.value)"></td>
+        <td><input type="number" min="0" max="70" value="${s.ex||''}" placeholder="—" style="width:64px;padding:4px 7px;border:1.5px solid var(--s200);border-radius:5px;text-align:center;font-size:.85rem" onchange="svSc('${sel}','${code}','ex',this.value)"></td>
+        <td style="font-weight:700">${tot||'—'}</td>
+        <td>${g!==null?`<span class="badge ${gpC(g)}">${g}.0</span>`:'—'}</td>
+        <td>${g!==null?gpG(g):'—'}</td>
+      </tr>`;}).join('')}</tbody></table></div>`:`<div class="em"><div class="emi">📋</div><div>No courses registered</div></div>`}
+  </div>`;
+}
+function svSc(sid,code,comp,val){if(!U.sc[sid])U.sc[sid]={};if(!U.sc[sid][code])U.sc[sid][code]={};U.sc[sid][code][comp]=parseInt(val)||0;toast(`${code} ${comp.toUpperCase()} saved`,'success');}
+
+function vTrans(){return`<div class="pt">📜 Transcripts</div><div class="card"><div class="sf"><select id="ts2" onchange="document.getElementById('tsb').innerHTML=genTS(document.getElementById('ts2').value)" style="min-width:220px">${U.students.map(s=>`<option value="${s.id}">${s.name} (${s.mat})</option>`).join('')}</select><button class="btn bp" onclick="toast('Transcript emailed to student','success')">📧 Email</button><button class="btn bg" onclick="window.print()">🖨️ Print</button></div></div><div id="tsb">${genTS('u1')}</div>`;}
+function vTR(sid){sV('trans');setTimeout(()=>{const s=document.getElementById('ts2');if(s){s.value=sid;document.getElementById('tsb').innerHTML=genTS(sid);}},60);}
+function genTS(sid){
+  const stu=U.students.find(x=>x.id===sid);if(!stu)return'';
+  const regs=U.reg[sid]||[];const sc=U.sc[sid]||{};const r=cGPA(sid);const g=parseFloat(r.cgpa);
+  const rows=regs.map(code=>{const c=U.courses.find(x=>x.code===code);if(!c)return null;const s=sc[code]||{};const tot=(s.ca||0)+(s.ex||0);const gv=tot?gp(tot):0;return{code,title:c.title,units:c.units,tot,gv,grade:gpG(gv)};}).filter(Boolean);
+  return`<div class="tsc">
+    <div style="text-align:center;margin-bottom:18px"><div style="font-size:1.3rem;font-weight:800">🎓 ${U.uni.name}</div><div style="font-size:.85rem;opacity:.8">OFFICIAL ACADEMIC TRANSCRIPT</div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;background:rgba(255,255,255,.08);border-radius:10px;padding:14px;margin-bottom:14px;font-size:.85rem">
+      <div><div style="opacity:.7;font-size:.72rem;text-transform:uppercase;margin-bottom:2px">Student</div><div style="font-weight:700">${stu.name}</div></div>
+      <div><div style="opacity:.7;font-size:.72rem;text-transform:uppercase;margin-bottom:2px">Matric No.</div><div style="font-weight:700;font-family:monospace">${stu.mat}</div></div>
+      <div><div style="opacity:.7;font-size:.72rem;text-transform:uppercase;margin-bottom:2px">Department</div><div style="font-weight:700">${stu.dept}</div></div>
+      <div><div style="opacity:.7;font-size:.72rem;text-transform:uppercase;margin-bottom:2px">Level</div><div style="font-weight:700">${stu.lvl}L</div></div>
+      <div><div style="opacity:.7;font-size:.72rem;text-transform:uppercase;margin-bottom:2px">Session</div><div style="font-weight:700">${U.uni.session}</div></div>
+      <div><div style="opacity:.7;font-size:.72rem;text-transform:uppercase;margin-bottom:2px">CGPA</div><div style="font-weight:800;font-size:1.2rem">${r.cgpa} / 5.0</div></div>
+    </div>
+    ${rows.length?`<div style="background:rgba(255,255,255,.08);border-radius:10px;overflow:hidden">
+      <div style="padding:10px 14px;font-weight:700;font-size:.83rem;background:rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.1)">${U.uni.semester} · ${U.uni.session}</div>
+      <div class="tsr hd"><span>Code</span><span>Course Title</span><span class="tc">Units</span><span class="tc">Total</span><span class="tc">Grade</span></div>
+      ${rows.map(rw=>`<div class="tsr"><span style="font-family:monospace;font-weight:700">${rw.code}</span><span>${rw.title}</span><span class="tc">${rw.units}</span><span class="tc">${rw.tot||'—'}</span><span class="tc" style="font-weight:700">${rw.grade}</span></div>`).join('')}
+    </div>
+    <div style="padding:12px 14px;background:rgba(255,255,255,.12);border-radius:10px;margin-top:8px;display:flex;justify-content:space-between;font-size:.85rem;flex-wrap:wrap;gap:8px">
+      <span>CGPA: <strong>${r.cgpa}/5.0</strong></span>
+      <span>Class: <strong>${g>=4.5?'First Class':g>=3.5?'Second Class Upper':g>=2.5?'Second Class Lower':g>=1.5?'Third Class':'Pass'}</strong></span>
+    </div>`:`<div style="text-align:center;padding:20px;opacity:.7">No courses registered this semester</div>`}
+  </div>`;
+}
+
+function vLec(){return`<div class="hdr"><div class="pt" style="margin:0">👨‍🏫 Lecturers</div></div><div class="card"><div class="tw"><table><thead><tr><th></th><th>Name</th><th>Rank</th><th>Department</th><th>Courses</th><th>Contact</th></tr></thead><tbody>${U.lecturers.map(l=>`<tr><td><div class="av">${ini(l.name)}</div></td><td><div style="font-weight:600">${l.name}</div><div style="font-size:.75rem;color:var(--s400)">${l.em}</div></td><td><span class="badge bg-p">${l.rank}</span></td><td>${l.dept}</td><td>${l.courses.map(c=>`<span class="badge bg-t" style="margin:2px;font-family:monospace">${c}</span>`).join('')}</td><td style="font-size:.83rem">${l.ph}</td></tr>`).join('')}</tbody></table></div></div>`;}
+
+function vFees(){
+  const tB=Object.values(U.fees).reduce((a,f)=>a+f.tot,0);
+  const tP=Object.values(U.fees).reduce((a,f)=>a+f.pd,0);
+  const tO=Object.values(U.fees).reduce((a,f)=>a+f.bal,0);
+  return`<div class="pt">💳 School Fees</div>
+  <div class="stats">
+    <div class="stat"><div class="sic">💰</div><div class="sn">₦${fmt(tB)}</div><div class="sl">Total Billed</div></div>
+    <div class="stat g"><div class="sic">✅</div><div class="sn">₦${fmt(tP)}</div><div class="sl">Collected</div></div>
+    <div class="stat a"><div class="sic">⏳</div><div class="sn">₦${fmt(tO)}</div><div class="sl">Outstanding</div></div>
+  </div>
+  <div class="card"><div class="tw"><table>
+    <thead><tr><th>Student</th><th>Matric</th><th>Fee</th><th>Paid</th><th>Balance</th><th>Status</th><th>Action</th></tr></thead>
+    <tbody>${U.students.map(stu=>{const f=U.fees[stu.id]||{};return`<tr>
+      <td><div style="font-weight:600">${stu.name}</div><div style="font-size:.75rem;color:var(--s400)">${stu.dept}</div></td>
+      <td style="font-family:monospace;font-size:.82rem">${stu.mat}</td>
+      <td>₦${fmt(f.tot||0)}</td><td>₦${fmt(f.pd||0)}</td>
+      <td style="font-weight:${f.bal>0?700:400};color:${f.bal>0?'var(--red)':'var(--green)'}">₦${fmt(f.bal||0)}</td>
+      <td><span class="badge ${stu.fees==='paid'?'bg-g':stu.fees==='partial'?'bg-a':'bg-r'}">${stu.fees}</span></td>
+      <td><button class="btn bs bsm" onclick="rPay('${stu.id}')">+ Pay</button></td>
+    </tr>`;}).join('')}</tbody>
+  </table></div></div>`;
+}
+function rPay(sid){const stu=U.students.find(x=>x.id===sid);const f=U.fees[sid];if(!f||!stu)return;if(f.bal<=0){toast(`${stu.name} is fully paid`,'info');return;}const pay=Math.min(50000,f.bal);f.pd+=pay;f.bal-=pay;stu.fees=f.bal===0?'paid':f.pd>0?'partial':'owing';toast(`₦${fmt(pay)} recorded for ${stu.name}`,'success');sV('fees');}
+
+function vHos(){
+  const halls=Object.keys(U.hostels);
+  return`<div class="pt">🏠 Hostel Management</div>
+  ${halls.map(hall=>{
+    const occ=U.students.filter(s=>s.hos===hall);const rooms=U.hostels[hall];const ocR=new Set(occ.map(s=>s.rm));
+    return`<div class="card"><div class="ct">${hall} <span class="badge bg-p" style="margin-left:auto">${occ.length}/${rooms.length} rooms</span></div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">
+        ${rooms.map(r=>`<div style="padding:6px 12px;border-radius:8px;font-size:.82rem;font-weight:600;background:${ocR.has(r)?'var(--pl)':'var(--gl)'};color:${ocR.has(r)?'var(--purple)':'var(--green)'}">${r}${ocR.has(r)?'':'  ✓'}</div>`).join('')}
+      </div>
+      <div class="tw"><table><thead><tr><th></th><th>Student</th><th>Matric</th><th>Room</th></tr></thead>
+      <tbody>${occ.map(s=>`<tr><td><div class="av">${ini(s.name)}</div></td><td style="font-weight:600">${s.name}</td><td style="font-family:monospace;font-size:.82rem">${s.mat}</td><td><span class="badge bg-p">${s.rm}</span></td></tr>`).join('')}</tbody></table></div>
+    </div>`;
+  }).join('')}`;
+}
+
+function vLib(){
+  return`<div class="pt">📖 Library</div><div class="card"><div class="ct">📚 Book Catalogue</div>
+  <div class="tw"><table><thead><tr><th>Title</th><th>Author</th><th>Status</th><th>Action</th></tr></thead>
+  <tbody>${U.books.map(b=>{const bwr=b.bwr?U.students.find(s=>s.id===b.bwr):null;return`<tr>
+    <td style="font-weight:600">${b.title}</td><td style="font-size:.85rem;color:var(--s500)">${b.auth}</td>
+    <td>${b.avail?`<span class="badge bg-g">Available</span>`:`<span class="badge bg-r">Borrowed</span>${bwr?`<div style="font-size:.75rem;color:var(--s400);margin-top:2px">${bwr.name}</div>`:''}`}</td>
+    <td>${b.avail?`<button class="btn bp bsm" onclick="borrowBook('${b.id}')">Borrow</button>`:`<button class="btn bg bsm" onclick="returnBook('${b.id}')">Return</button>`}</td>
+  </tr>`;}).join('')}</tbody></table></div></div>`;
+}
+function borrowBook(id){const b=U.books.find(x=>x.id===id);if(!b||!b.avail)return;b.avail=false;b.bwr=U.students[0]?.id||null;toast(`Book borrowed by ${U.students[0]?.name||'student'}`,'success');sV('library');}
+function returnBook(id){const b=U.books.find(x=>x.id===id);if(!b)return;b.avail=true;b.bwr=null;toast('Book returned to library','success');sV('library');}
+
+function vSet(){
+  return`<div class="pt">⚙️ Settings</div>
+  <div class="card" style="max-width:540px"><div class="ct">🏛️ University Info</div>
+    <div class="fg"><label>University Name</label><input id="un" value="${U.uni.name}"></div>
+    <div class="fg"><label>Academic Session</label><input id="us" value="${U.uni.session}"></div>
+    <div class="fg"><label>Current Semester</label><select id="usm"><option ${U.uni.semester==='First Semester'?'selected':''}>First Semester</option><option ${U.uni.semester==='Second Semester'?'selected':''}>Second Semester</option></select></div>
+    <div class="fa"><button class="btn bp" onclick="svSet()">💾 Save</button></div>
+  </div>
+  <div class="card" style="max-width:540px"><div class="ct">🔑 Change Password</div>
+    <div id="pm" class="im h"></div>
+    <div class="fg"><label>Current Password</label><input id="sc" type="password"></div>
+    <div class="fg"><label>New Password</label><input id="sn2" type="password"></div>
+    <div class="fg"><label>Confirm New Password</label><input id="sco" type="password"></div>
+    <div class="fa"><button class="btn bp" onclick="chPw()">🔑 Update</button></div>
+  </div>`;
+}
+function svSet(){U.uni.name=document.getElementById('un')?.value||U.uni.name;U.uni.session=document.getElementById('us')?.value||U.uni.session;U.uni.semester=document.getElementById('usm')?.value||U.uni.semester;toast('Settings saved','success');}
+function chPw(){
+  const cur=document.getElementById('sc')?.value,nw=document.getElementById('sn2')?.value,cn=document.getElementById('sco')?.value;
+  const msg=document.getElementById('pm');msg.classList.add('h');
+  if(cur!==CR.p){msg.className='im er';msg.textContent='Current password incorrect.';msg.classList.remove('h');return;}
+  if(nw.length<8){msg.className='im er';msg.textContent='Password must be 8+ characters.';msg.classList.remove('h');return;}
+  if(nw!==cn){msg.className='im er';msg.textContent='Passwords do not match.';msg.classList.remove('h');return;}
+  CR.p=nw;msg.className='im ok';msg.textContent='✅ Password updated successfully.';msg.classList.remove('h');
+}
+</script>
+</body>
+</html>
